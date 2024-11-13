@@ -1,15 +1,32 @@
 class FavoriteMovieSearchPresenter {
-    constructor({ favoriteMovies }) {
-        this._listenToSeacrhRequestByUser();
+    constructor({ favoriteMovies, view }) {
         this._favoriteMovies = favoriteMovies;
+        this._view = view;
+        
+        this._listenToSearchRequestByUser();
     }
 
-    _listenToSeacrhRequestByUser() {
-        this._queryElement = document.getElementById('query');
-        this._queryElement.addEventListener('change', (event) => {
-            this._latestQuery = event.target.value;
-            this._favoriteMovies.searchMovies(this._latestQuery);
+    _listenToSearchRequestByUser() {
+        this._view.runWhenUserIsSearching((latestQuery) => {
+            this._searchMovies(latestQuery);
         });
+    }
+
+    _showFoundMovies(movies) {
+        this._view.showFavoriteMovies(movies);
+    } 
+
+    async _searchMovies(latestQuery) {
+        this._latestQuery = latestQuery.trim();
+
+        let foundMovies;
+        if (this.latestQuery.length > 0) {
+            foundMovies = await this._favoriteMovies.searchMovies(this.latestQuery);
+        } else {
+            foundMovies = await this._favoriteMovies.getAllMovies();
+        }
+        
+        this._showFoundMovies(foundMovies);
     }
 
     get latestQuery() {
