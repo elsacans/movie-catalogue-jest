@@ -13,12 +13,17 @@ exports.config = {
   helpers: {
     Playwright: {
       browser: 'chromium',
-      url: 'http://localhost:',
+      url: 'http://localhost:9000',
       show: true
     }
   },
   include: {
     I: './steps_file.js'
   },
-  name: 'movie-catalogue-jest-configured'
-}
+  name: 'movie-catalogue-jest-configured',
+  plugins: {
+    screenshotOnFail: {
+      enabled: false,
+    },
+  },
+};
