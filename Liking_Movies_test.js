@@ -34,7 +34,7 @@ Scenario('Liking one movie', async ({ I }) => {
 Scenario('Searching movies', async ({ I }) => {
     I.see('Tidak ada film untuk ditampilkan', '.movie-item__not__found');
 
-    I.amOnpage('/');
+    I.amOnPage('/');
 
     I.seeElement('.movie__title a');
 
